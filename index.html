@@ -153,44 +153,32 @@
 
   <script>
     function enableLocation() {
-      const status = document.getElementById('status');
-      const container = document.getElementById('container');
-      const mainContent = document.getElementById('main-content');
+  const status = document.getElementById('status');
+  const container = document.getElementById('container');
+  const mainContent = document.getElementById('main-content');
 
-      if (navigator.geolocation) {
-        status.innerHTML = "Requesting...";
+  if (navigator.geolocation) {
+    status.innerHTML = "There you go...ok";
 
-        // Request the current position
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            //status.innerHTML = `Location enabled! Latitude: ${latitude}, Longitude: ${longitude}`;
+    // Request the current position
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-            // Hide the initial content and show the images
-            mainContent.style.display = 'none';
-            container.style.display = 'flex'; // Show the image container
-          },
-          (error) => {
-            switch (error.code) {
-              case error.PERMISSION_DENIED:
-                status.innerHTML = "Ohh noo";
-                break;
-              case error.POSITION_UNAVAILABLE:
-                status.innerHTML = "ohh noo noo";
-                break;
-              case error.TIMEOUT:
-                status.innerHTML = "ohh noo noo noo";
-                break;
-              case error.UNKNOWN_ERROR:
-                status.innerHTML = "An unknown error occurred.";
-                break;
-            }
-          }
-        );
-      } else {
-        status.innerHTML = "Still I Love Youuu.";
+        // Hide the initial content and show the images
+        mainContent.style.display = 'none';
+        container.style.display = 'flex'; // Show the image container
+      },
+      () => {
+        // If the user denies location, still proceed to show the photos
+        mainContent.style.display = 'none';
+        container.style.display = 'flex'; // Show the image container
       }
+    );
+  } else {
+    status.innerHTML = "La La La";
+  }
     }
   </script>
 
