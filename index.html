@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hey Youuuu</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow-x: hidden;
+      background-color: #f0f0f0;
+    }
+
+    #container {
+      display: none; /* Initially hidden */
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .container::-webkit-scrollbar {
+      display: none; /* Hide the scrollbar */
+    }
+
+    .image {
+      flex: 0 0 auto;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      animation: zoom 8s infinite;
+      object-fit: cover;
+    }
+
+    @keyframes zoom {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .overlay-text {
+      animation: fadeIn 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0.2;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+    }
+
+    #main-content {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="main-content">
+    <h1>Just Click Me <3</h1>
+    <button onclick="enableLocation()">Enable Location</button>
+    <p id="status"></p>
+  </div>
+
+  <!-- Image Container (Initially Hidden) -->
+  <div id="container" class="container">
+    <!-- Image 1 -->
+    <div class="image">
+      <img src="https://via.placeholder.com/1920x1080/ff7f7f/333333?text=Image+1" alt="Image 1">
+      <div class="overlay">
+        <div class="overlay-text">Turn on Location Services</div>
+      </div>
+    </div>
+
+    <!-- Image 2 -->
+    <div class="image">
+      <img src="https://via.placeholder.com/1920x1080/7fff7f/333333?text=Image+2" alt="Image 2">
+      <div class="overlay">
+        <div class="overlay-text">For a Better Experience</div>
+      </div>
+    </div>
+
+    <!-- Image 3 -->
+    <div class="image">
+      <img src="https://via.placeholder.com/1920x1080/7f7fff/333333?text=Image+3" alt="Image 3">
+      <div class="overlay">
+        <div class="overlay-text">Please Enable Location</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function enableLocation() {
+      const status = document.getElementById('status');
+      const container = document.getElementById('container');
+      const mainContent = document.getElementById('main-content');
+
+      if (navigator.geolocation) {
+        status.innerHTML = "Requesting...";
+
+        // Request the current position
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            //status.innerHTML = `Location enabled! Latitude: ${latitude}, Longitude: ${longitude}`;
+
+            // Hide the initial content and show the images
+            mainContent.style.display = 'none';
+            container.style.display = 'flex'; // Show the image container
+          },
+          (error) => {
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                status.innerHTML = "Ohh noo";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                status.innerHTML = "ohh noo noo";
+                break;
+              case error.TIMEOUT:
+                status.innerHTML = "ohh noo noo noo";
+                break;
+              case error.UNKNOWN_ERROR:
+                status.innerHTML = "An unknown error occurred.";
+                break;
+            }
+          }
+        );
+      } else {
+        status.innerHTML = "Still I Love Youuu.";
+      }
+    }
+  </script>
+
+</body>
+</html>
